@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REGISTRY="ghcr.io"
-BUILDER_NAME="qemu-builder"
+BUILDER_NAME="odp-qemu-builder"
 CACHE_DIR="${HOME}/.cache/docker-buildx/${BUILDER_NAME}"
 PLATFORMS="linux/amd64,linux/arm64"
 
@@ -25,7 +25,8 @@ if [[ "$REPO" == "$REMOTE_URL" ]]; then
 fi
 
 # ghcr.io requires the image name to be lowercase
-IMAGE="${REGISTRY}/$(echo "$REPO" | tr '[:upper:]' '[:lower:]')"
+# Push to the repo-scoped package (e.g. ghcr.io/owner/repo/qemu)
+IMAGE="${REGISTRY}/$(echo "$REPO" | tr '[:upper:]' '[:lower:]')/qemu"
 
 # ---------------------------------------------------------------------------
 # Tags: branch + short SHA, plus 'latest' on main
